@@ -1,0 +1,61 @@
+/* src/components/ReserveFlight.css */
+* {
+    box-sizing: border-box;
+}
+
+.seat-container {
+    height: 55vh; /* Top 3/4 of the page */
+    overflow-y: auto; /* Add vertical scroll bar if necessary */
+    margin-bottom: 20px; /* Space below the container */
+}
+
+.seat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.seat {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px; /* Rounded corners */
+}
+
+.seat.booked {
+    background-color: #ffcccc; /* Red for booked seats */
+}
+
+.seat.available {
+    background-color: #ccffcc; /* Green for available seats */
+}
+
+form {
+    margin: auto;
+    display: grid; /* to use css-grid */
+    grid-template-columns: 1fr 1fr; /* creates 2 columns */
+    gap: 20px; /* creates a gap between the columns and rows */
+    max-width: 800px;
+}
+
+form button {
+    grid-column: span 2; /* lets those elements span both columns */
+}
+
+.form-button {
+    display: block;
+}
+
+form button {
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
