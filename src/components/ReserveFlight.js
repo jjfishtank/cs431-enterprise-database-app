@@ -85,7 +85,8 @@ function ReserveFlight() {
                 setError('');
             })
             .catch(err => {
-                setError(`SQL Error: ${err.message}`);
+                // Reservation INSERT Constraint Failure. Render error message.
+                setError(`${err.response.data.error}`);
             });
         }).catch(err => {
             setError(`Error: ${JSON.stringify(err.response)}`);
