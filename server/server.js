@@ -76,7 +76,11 @@ app.post('/reservations', (req, res) => {
 
     db.query(sql, reservationData, (err, result) => {
         if (err) {
-            res.status(500).send(`SQL Error: ${err.message}`);
+            console.error('Error executing SQL query:', err);
+            return res.status(500).json({
+                message: 'An error occurred while creating the reservation',
+                error: err.message
+            });
         } else {
             res.status(201).json(result);
         }

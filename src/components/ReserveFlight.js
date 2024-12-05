@@ -56,7 +56,7 @@ function ReserveFlight() {
             API.get(`/customers/${formData.CustomerID}`),
             API.get(`/bank_accounts/${formData.BankAccountNumber}`)
         ]).then(([customerResponse, bankAccountResponse]) => {
-            if (!customerResponse.data || !bankAccountResponse.data) {
+            if (customerResponse.data.length === 0 || bankAccountResponse.data.length === 0) {
                 setError('Invalid Customer ID or Bank Account Number');
                 return;
             }
@@ -88,7 +88,7 @@ function ReserveFlight() {
                 setError(`SQL Error: ${err.message}`);
             });
         }).catch(err => {
-            setError(`Error: ${err.message}`);
+            setError(`Error: ${JSON.stringify(err.response)}`);
         });
     };
 
