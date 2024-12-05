@@ -23,7 +23,7 @@ db.connect((err) => {
 });
 
 app.get('/flights', (req, res) => {
-    let sql = 'SELECT * FROM flights';
+    let sql = 'SELECT * FROM flights WHERE DepartureTime > NOW()';
     db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results);
