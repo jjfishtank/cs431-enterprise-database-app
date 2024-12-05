@@ -1,8 +1,13 @@
-// src/components/Flights.js
+/* src/components/Flights.js */
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import API from '../services/api';
+import styles from "./Flights.module.css";
+import DataTable from 'datatables.net-react';
+import DT from 'datatables.net-dt';
+import 'datatables.net-responsive-dt';
+ 
+DataTable.use(DT);
 
 function Flights() {
     const [flights, setFlights] = useState([]);
@@ -17,39 +22,34 @@ function Flights() {
             });
     }, []);
 
+    const columns = [
+        { title: 'Flight Number', data: 'FlightNumber' },
+        { title: 'Company Name', data: 'CompanyName' },
+        { title: 'Origin', data: 'Origin' },
+        { title: 'Destination', data: 'Destination' },
+        { title: 'Departure Time', data: 'DepartureTime', render: (data) => new Date(data).toLocaleString() },
+        { title: 'Arrival Time', data: 'ArrivalTime', render: (data) => new Date(data).toLocaleString() },
+        { title: 'Total Seats', data: 'TotalSeats' },
+        { title: 'Action', data: 'FlightNumber', render: (data) => `<a href="/reserve/${data}">Reserve Flight</a>` },
+    ];
+
     return (
         <div>
-            <h1>Flights</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Flight Number</th>
-                        <th>Company Name</th>
-                        <th>Origin</th>
-                        <th>Destination</th>
-                        <th>Departure Time</th>
-                        <th>Arrival Time</th>
-                        <th>Total Seats</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {flights.map(flight => (
-                        <tr key={flight.FlightNumber}>
-                            <td>{flight.FlightNumber}</td>
-                            <td>{flight.CompanyName}</td>
-                            <td>{flight.Origin}</td>
-                            <td>{flight.Destination}</td>
-                            <td>{new Date(flight.DepartureTime).toLocaleString()}</td>
-                            <td>{new Date(flight.ArrivalTime).toLocaleString()}</td>
-                            <td>{flight.TotalSeats}</td>
-                            <td><Link to={`/reserve/${flight.FlightNumber}`}>Reserve Flight</Link></td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            <h1>Reservations</h1>
-            <h1>BankAccounts</h1>
+            <div class={styles.tableContainer}>
+                <DataTable class="display" columns={columns} data={flights} options={{
+                    responsive: true,
+                    lengthChange: false,
+                    layout: {
+                        topStart: function () {
+                            let title = document.createElement('h2');
+                            title.style.margin = "auto";
+                            title.innerHTML = 'Flights';
+                            return title;
+                        }
+                    }
+                }}>
+                </DataTable>
+            </div>
         </div>
     );
 }
