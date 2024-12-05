@@ -83,6 +83,19 @@ app.post('/reservations', (req, res) => {
     });
 });
 
+app.get('/reservations', (req, res) => {
+    const customerID = req.query.customerID;
+    if (!customerID) {
+        return res.status(400).send('CustomerID is required');
+    }
+
+    let sql = 'SELECT * FROM reservations WHERE CustomerID = ?';
+    db.query(sql, [customerID], (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
+});
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

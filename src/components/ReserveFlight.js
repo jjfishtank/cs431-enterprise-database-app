@@ -1,8 +1,8 @@
-// src/components/ReserveFlight.js
+/* src/components/ReserveFlight.js */
 import React, { useEffect, useState } from 'react';
 import API from '../services/api';
 import { useParams } from 'react-router-dom';
-import './ReserveFlight.css';
+import styles from './ReserveFlight.module.css';
 
 function ReserveFlight() {
     const { flightNumber } = useParams();
@@ -94,14 +94,14 @@ function ReserveFlight() {
 
     return (
         <div>
-            <h2>Reserve Flight {flightNumber}</h2>
+            <h2 style={{textAlign:'center'}}>Reserve Flight {flightNumber}</h2>
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            <div className="seat-container">
-                <div className="seat-grid">
+            <div className={styles.seatContainer}>
+                <div className={styles.seatGrid}>
                     {seats.map(seat => (
                         <div 
                             key={seat.SeatNumber} 
-                            className={`seat ${seat.isBooked ? 'booked' : 'available'}`}
+                            className={`${styles.seat} ${seat.isBooked ? styles.booked : styles.available}`}
                         >
                             <p>Seat Number: {seat.SeatNumber}</p>
                             <p>Class: {seat.Class}</p>
@@ -110,40 +110,40 @@ function ReserveFlight() {
                     ))}
                 </div>
             </div>
-            <form onSubmit={handleSubmit}>
-                <div class="form-group">
+            <form onSubmit={handleSubmit} class={styles.reservationForm}>
+                <div class={styles.formGroup}>
                     <label>Amount</label>
-                    <input type="number" name="Amount" value={formData.Amount} onChange={handleChange} required />
+                    <input type="number" min="0.00" step="0.01" name="Amount" value={formData.Amount} onChange={handleChange} required />
                 </div>
-                <div class="form-group">
+                <div class={styles.formGroup}>
                     <label>Bank Account Number</label>
                     <input type="text" name="BankAccountNumber" value={formData.BankAccountNumber} onChange={handleChange} required />
                 </div>
-                <div class="form-group">
+                <div class={styles.formGroup}>
                     <label>Card Holder Name</label>
                     <input type="text" name="CardHolderName" value={formData.CardHolderName} onChange={handleChange} required />
                 </div>
-                <div class="form-group">
+                <div class={styles.formGroup}>
                     <label>Card Number</label>
                     <input type="text" name="CardNumber" value={formData.CardNumber} onChange={handleChange} required />
                 </div>
-                <div class="form-group">
+                <div class={styles.formGroup}>
                     <label>Customer ID</label>
                     <input type="text" name="CustomerID" value={formData.CustomerID} onChange={handleChange} required />
                 </div>
-                <div class="form-group">
+                <div class={styles.formGroup}>
                     <label>CVV</label>
                     <input type="text" name="CVV" value={formData.CVV} onChange={handleChange} required />
                 </div>
-                <div class="form-group">
+                <div class={styles.formGroup}>
                     <label>Expiry Date</label>
                     <input type="date" name="ExpiryDate" value={formData.ExpiryDate} onChange={handleChange} required />
                 </div>
-                <div class="form-group">
+                <div class={styles.formGroup}>
                     <label>Seat Number</label>
-                    <input type="text" name="SeatNumber" value={formData.SeatNumber} onChange={handleChange} required />
+                    <input type="number" min="1" max={seats.length} step="1" name="SeatNumber" value={formData.SeatNumber} onChange={handleChange} required />
                 </div>
-                <button type="submit" class="form-button">Reserve</button>
+                <button type="submit" class={styles.formButton}>Reserve</button>
             </form>
         </div>
     );
